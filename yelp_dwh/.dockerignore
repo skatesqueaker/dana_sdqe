@@ -1,0 +1,9 @@
+data/output/*.csv
+data/*.duckdb
+logs/
+*.log
+__pycache__/
+*.pyc
+.git/
+.DS_Store
+README.md
