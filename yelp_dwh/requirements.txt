@@ -1,0 +1,5 @@
+polars==0.20.31
+pyyaml==6.0.1
+duckdb==0.10.2
+pathlib
+typing-extensions

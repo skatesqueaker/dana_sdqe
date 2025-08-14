@@ -1,0 +1,34 @@
+settings:
+  overwrite_existing: true
+  log_level: INFO
+
+conversions:
+  - dataset: yelp_business
+    source: data/input/yelp_dataset/yelp_academic_dataset_business.json
+    target: data/output/yelp_business.csv
+
+  - dataset: yelp_checkin
+    source: data/input/yelp_dataset/yelp_academic_dataset_checkin.json
+    target: data/output/yelp_checkin.csv
+
+  - dataset: yelp_review
+    source: data/input/yelp_dataset/yelp_academic_dataset_review.json
+    target: data/output/yelp_review.csv
+
+  - dataset: yelp_tip
+    source: data/input/yelp_dataset/yelp_academic_dataset_tip.json
+    target: data/output/yelp_tip.csv
+
+  - dataset: yelp_user
+    source: data/input/yelp_dataset/yelp_academic_dataset_user.json
+    target: data/output/yelp_user.csv
+
+csv_sources:
+  - dataset: us_weather_precipitation
+    source: data/input/us_weather/USW00093084_SAFFORD_MUNICIPAL_AP_precipitation_inch[1].csv
+
+  - dataset: us_weather_temperature
+    source: data/input/us_weather/USW00093084_temperature_degreeF[1].csv
+
+database:
+  yelp: data/yelp_dwh.duckdb
