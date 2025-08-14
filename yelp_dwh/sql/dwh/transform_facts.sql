@@ -22,10 +22,4 @@ VARCHAR)
 WHERE r.review_id IS NOT NULL
 AND r.review_time IS NOT NULL
 AND r.stars IS NOT NULL
-AND r.stars BETWEEN 1 AND 5
-ON CONFLICT (review_id) DO UPDATE SET
-    business_key = EXCLUDED.business_key,
-    date_key = EXCLUDED.date_key,
-    weather_key = EXCLUDED.weather_key,
-    review_stars = EXCLUDED.review_stars,
-    review_length = EXCLUDED.review_length;
+AND r.stars BETWEEN 1 AND 5;
