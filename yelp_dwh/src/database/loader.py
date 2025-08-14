@@ -34,9 +34,11 @@ def init_schemas(config_file: str = "config/config.yaml", db_file: str = None) -
         else:
             # Execute without the logging part
             conn.execute("CREATE SCHEMA IF NOT EXISTS staging")
-            conn.execute("CREATE SCHEMA IF NOT EXISTS ods") 
+            conn.execute("CREATE SCHEMA IF NOT EXISTS ods")
             conn.execute("CREATE SCHEMA IF NOT EXISTS dwh")
-            logging.info("Initialized database schemas (staging, ods, dwh) - skipped logging")
+            logging.info(
+                "Initialized database schemas (staging, ods, dwh) - skipped logging"
+            )
 
 
 def create_tables_from_ddl(conn: duckdb.DuckDBPyConnection, sql_file_path: str) -> None:
@@ -86,10 +88,10 @@ def load_all_staging_data(
 
     try:
         create_tables_from_ddl(conn, "sql/ddl/create_staging_tables.sql")
-        
+
         total_rows = 0
         successful_loads = 0
-        
+
         for conversion in config.get("conversions", []):
             dataset = conversion["dataset"]
             csv_file = conversion["target"]
@@ -101,7 +103,7 @@ def load_all_staging_data(
             if rows > 0:
                 total_rows += rows
                 successful_loads += 1
-        
+
         for csv_source in config.get("csv_sources", []):
             dataset = csv_source["dataset"]
             csv_file = csv_source["source"]  # direct source, not target
@@ -137,19 +139,19 @@ def transform_to_ods(
 
     try:
         create_tables_from_ddl(conn, "sql/ddl/create_ods_tables.sql")
-        
+
         ods_transforms = [
             "sql/ods/transform_business.sql",
-            "sql/ods/transform_user.sql", 
+            "sql/ods/transform_user.sql",
             "sql/ods/transform_review.sql",
             "sql/ods/transform_tip.sql",
             "sql/ods/transform_checkin.sql",
             "sql/ods/transform_weather_precipitation.sql",
-            "sql/ods/transform_weather_temperature.sql"
+            "sql/ods/transform_weather_temperature.sql",
         ]
-        
+
         successful_transforms = 0
-        
+
         for transform_file in ods_transforms:
             transform_path = Path(transform_file)
             if transform_path.exists():
@@ -158,8 +160,10 @@ def transform_to_ods(
                 successful_transforms += 1
             else:
                 logging.warning(f"Transform file not found: {transform_file}")
-        
-        logging.info(f"ODS transformation complete: {successful_transforms}/{len(ods_transforms)} transforms executed")
+
+        logging.info(
+            f"ODS transformation complete: {successful_transforms}/{len(ods_transforms)} transforms executed"
+        )
     except Exception as e:
         logging.error(f"ODS transformation failed: {e}")
         raise
@@ -180,14 +184,14 @@ def transform_to_dwh(
 
     try:
         create_tables_from_ddl(conn, "sql/ddl/create_dwh_tables.sql")
-        
+
         dwh_transforms = [
             "sql/dwh/transform_dimensions.sql",
-            "sql/dwh/transform_facts.sql"
+            "sql/dwh/transform_facts.sql",
         ]
-        
+
         successful_transforms = 0
-        
+
         for transform_file in dwh_transforms:
             transform_path = Path(transform_file)
             if transform_path.exists():
@@ -196,8 +200,10 @@ def transform_to_dwh(
                 successful_transforms += 1
             else:
                 logging.warning(f"Transform file not found: {transform_file}")
-        
-        logging.info(f"DWH transformation complete: {successful_transforms}/{len(dwh_transforms)} transforms executed")
+
+        logging.info(
+            f"DWH transformation complete: {successful_transforms}/{len(dwh_transforms)} transforms executed"
+        )
     except Exception as e:
         logging.error(f"DWH transformation failed: {e}")
         raise

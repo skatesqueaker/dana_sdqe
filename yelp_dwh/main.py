@@ -6,7 +6,12 @@ sys.path.append(str(Path(__file__).parent / "src"))
 
 from src.converter.json_to_csv import process_conversions
 from src.converter.validator import validate_from_config
-from src.database.loader import load_all_staging_data, init_schemas, transform_to_ods, transform_to_dwh
+from src.database.loader import (
+    load_all_staging_data,
+    init_schemas,
+    transform_to_ods,
+    transform_to_dwh,
+)
 from src.utils.helpers import setup_logging
 
 

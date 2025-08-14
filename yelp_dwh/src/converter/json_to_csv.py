@@ -70,7 +70,7 @@ def process_conversions(config_file: str = "config/config.yaml") -> None:
             logging.info(f"[{i}/{len(conversions)}] Processing: {source}")
             try:
                 source_path = Path(source)
-                if source_path.suffix.lower() == '.json':
+                if source_path.suffix.lower() == ".json":
                     convert_json(source, target, overwrite)
                 else:
                     logging.warning(f"Unsupported file type: {source_path.suffix}")
