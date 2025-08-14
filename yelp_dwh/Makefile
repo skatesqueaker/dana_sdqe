@@ -1,4 +1,4 @@
-.PHONY: help setup install convert validate init load ods clean lint format benchmark schemas
+.PHONY: help setup install convert validate init load ods clean lint format benchmark
 
 help:
 	@echo "Yelp DWH"
